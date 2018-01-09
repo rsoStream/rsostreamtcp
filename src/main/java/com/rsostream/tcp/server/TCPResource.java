@@ -6,10 +6,7 @@ import com.rsostream.tcp.converter.ReadingConverter;
 import com.rsostream.tcp.models.SensorReading;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,4 +30,5 @@ public class TCPResource {
             return Response.status(400).build();
         }
     }
+
 }

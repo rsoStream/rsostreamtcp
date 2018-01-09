@@ -22,14 +22,31 @@ kumuluzee:
   cors-filter:
     servlet:
       allow-origin: "*"
+  metrics:
+    servlet:
+      enabled: true
+      mapping: /metrics
+#    logs:
+#      enabled: true
+#      period-s: 30
+#      level: TRACE
+    web-instrumentation:
+      - name: metrics-endpoint
+        url-pattern: /v1/tcp/*
+      - name: premetheus-endpoint
+        url-pattern: /prometheus/*
   health:
     servlet:
       mapping: /health
       enabled: true
     logs:
       enabled: true
-      level: INFO
+      level: TRACE
       period-s: 30
+#    logstash: #TODO
+#      address: 221e8a85-d5ce-40e4-a708-057e7c7d7e68-ls.logit.io
+#      port: 14880
+#      period-s: 15
     checks:
       disk-space-health-check:
         threshold: 100000000
@@ -37,12 +54,12 @@ kumuluzee:
         - connection-url: https://google.com # Please change this into something more meaningful.
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
-                  <Configuration name="customers">
+                  <Configuration name="rso-tcp">
                       <Appenders>
                           <Console name="console" target="SYSTEM_OUT">
                               <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
                           </Console>
-                          <Socket name="logstash" host="b1895921-f97c-4780-a109-3045e19677f9-ls.logit.io" port="17563"
+                          <Socket name="logstash" host="221e8a85-d5ce-40e4-a708-057e7c7d7e68-ls.logit.io" port="14880"
                                                                                          protocol="tcp">
                               <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
                           </Socket>

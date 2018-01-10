@@ -1,4 +1,4 @@
-package com.rsostream.tcp.server.properties;
+package com.rsostream.tcp.properties;
 
 import com.kumuluz.ee.configuration.cdi.ConfigBundle;
 import com.kumuluz.ee.configuration.cdi.ConfigValue;

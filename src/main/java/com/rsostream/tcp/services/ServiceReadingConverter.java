@@ -1,6 +1,16 @@
-package com.rsostream.tcp.converter;
+package com.rsostream.tcp.services;
 
+import com.google.gson.Gson;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.rsostream.tcp.models.*;
+import com.rsostream.tcp.util.InvalidMessageException;
+import com.rsostream.tcp.util.InvalidMessageTypeException;
+import com.rsostream.tcp.util.RabbitMQException;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 
 /**
  * Message received by the device is in the following format:
@@ -33,11 +43,17 @@ import com.rsostream.tcp.models.*;
  *    sample message: #lux=1514412395,990000862471854,23,120|
  *  -
  */
-public class ReadingConverter {
+@ApplicationScoped
+public class ServiceReadingConverter {
 
-    public static SensorReading convert(String rawMessage) throws InvalidMessage {
-        if (rawMessage.charAt(0) != '#') throw new InvalidMessage();
-        if (rawMessage.charAt(rawMessage.length() - 1) != '|') throw new InvalidMessage();
+    private static final Logger log = LogManager.getLogger(ServiceReadingConverter.class.getName());
+
+    @Inject
+    private ServiceRabbitMQ rabbitMQ;
+
+    private SensorReading convert(String rawMessage) throws InvalidMessageException {
+        if (rawMessage.charAt(0) != '#') throw new InvalidMessageException();
+        if (rawMessage.charAt(rawMessage.length() - 1) != '|') throw new InvalidMessageException();
         String[] msgData = rawMessage.substring(1, rawMessage.length() - 2).split("=");
         String type = msgData[0];
         msgData = msgData[1].split(",");
@@ -59,8 +75,20 @@ public class ReadingConverter {
                 currentReading = LuxReading.createReading(msgData);
                 break;
             default:
-                throw new InvalidMessageType();
+                throw new InvalidMessageTypeException();
         }
         return currentReading;
+    }
+
+    public boolean receiveReading(String message) throws RabbitMQException {
+        Gson gson = new Gson();
+        try {
+            SensorReading currentReading = convert(message);
+            String response = gson.toJson(currentReading);
+            log.info("Obtained: " + response);
+            return rabbitMQ.publish(response);
+        } catch (InvalidMessageException e) {
+            return false;
+        }
     }
 }

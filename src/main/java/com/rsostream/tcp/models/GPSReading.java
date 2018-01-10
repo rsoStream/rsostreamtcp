@@ -1,6 +1,6 @@
 package com.rsostream.tcp.models;
 
-import com.rsostream.tcp.converter.InvalidMessage;
+import com.rsostream.tcp.util.InvalidMessageException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -43,9 +43,9 @@ public class GPSReading extends SensorReading {
         this.speed = speed;
     }
 
-    public static GPSReading createReading(String[] data) throws InvalidMessage {
+    public static GPSReading createReading(String[] data) throws InvalidMessageException {
         if (data.length != GPSReading.numberOfAttributes) {
-            throw new InvalidMessage();
+            throw new InvalidMessageException();
         }
         Date dateObtained = new Date(Long.parseLong(data[0]));
         String IMEI = data[1];

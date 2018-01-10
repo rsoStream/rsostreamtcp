@@ -1,6 +1,6 @@
 package com.rsostream.tcp.models;
 
-import com.rsostream.tcp.converter.InvalidMessage;
+import com.rsostream.tcp.util.InvalidMessageException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -33,9 +33,9 @@ public class HumidityReading extends SensorReading {
         this.humidity = humidity;
     }
 
-    public static HumidityReading createReading(String[] data) throws InvalidMessage {
+    public static HumidityReading createReading(String[] data) throws InvalidMessageException {
         if (data.length != HumidityReading.numberOfAttributes) {
-            throw new InvalidMessage();
+            throw new InvalidMessageException();
         }
         Date dateObtained = new Date(Long.parseLong(data[0]));
         String IMEI = data[1];

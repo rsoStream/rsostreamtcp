@@ -72,9 +72,11 @@ kumuluzee:
                           </Root>
                       </Loggers>
                   </Configuration>'
-rest-config:
-  string-property: Monday
-  boolean-property: true
-  integer-property: 23
+rabbit-mq:
+  host: localhost
+  username: guest
+  password: guest
+  routing-key: tcp-q
+  exchange-name: ''
 
 # ETCD kubernetes deployment -> github rso-customers @ jmezna

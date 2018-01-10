@@ -1,4 +1,4 @@
-package com.rsostream.tcp.server;
+package com.rsostream.tcp.server.logger;
 
 import com.kumuluz.ee.common.config.EeConfig;
 import com.kumuluz.ee.common.runtime.EeRuntime;

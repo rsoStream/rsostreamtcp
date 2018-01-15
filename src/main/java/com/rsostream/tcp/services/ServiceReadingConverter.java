@@ -10,8 +10,6 @@ import com.rsostream.tcp.util.RabbitMQException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
-
 /**
  * Message received by the device is in the following format:
  * #</messageType>=</Attribute#1>,</Attribute#2>,</Attribute#3>, ..., </Attribute#N>|
@@ -49,7 +47,7 @@ public class ServiceReadingConverter {
     private static final Logger log = LogManager.getLogger(ServiceReadingConverter.class.getName());
 
     @Inject
-    private ServiceRabbitMQ rabbitMQ;
+    private ServiceRabbitMQPublish rabbitMQ;
 
     private SensorReading convert(String rawMessage) throws InvalidMessageException {
         if (rawMessage.charAt(0) != '#') throw new InvalidMessageException();
@@ -86,7 +84,7 @@ public class ServiceReadingConverter {
             SensorReading currentReading = convert(message);
             String response = gson.toJson(currentReading);
             log.info("Obtained: " + response);
-            return rabbitMQ.publish(response);
+            return rabbitMQ.publish(String.valueOf(currentReading.TYPE) + "," + response);
         } catch (InvalidMessageException e) {
             return false;
         }

@@ -11,7 +11,7 @@ public class BatteryReading extends SensorReading {
     public static float numberOfAttributes = 4;
 
     BatteryReading(Date dateObtained, String IMEI, int signalQuality, float batteryLevel) {
-        super(dateObtained, IMEI, signalQuality);
+        super(EnumType.BAT, dateObtained, IMEI, signalQuality);
         this.batteryLevel = batteryLevel;
     }
 

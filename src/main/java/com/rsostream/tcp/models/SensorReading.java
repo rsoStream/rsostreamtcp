@@ -8,12 +8,21 @@ import java.util.Date;
 
 @XmlRootElement
 public class SensorReading {
+    public final EnumType TYPE;
     private Date timeObtained;
     private String IMEI;
     private int signalQuality;
-    static int numberOfAttributes = 3;
+    private static int numberOfAttributes = 3;
 
     SensorReading(Date timeObtained, String IMEI, int signalQuality) {
+        TYPE = EnumType.SUPER;
+        this.timeObtained = timeObtained;
+        this.IMEI = IMEI;
+        this.signalQuality = signalQuality;
+    }
+
+    SensorReading(EnumType type, Date timeObtained, String IMEI, int signalQuality) {
+        TYPE = type;
         this.timeObtained = timeObtained;
         this.IMEI = IMEI;
         this.signalQuality = signalQuality;

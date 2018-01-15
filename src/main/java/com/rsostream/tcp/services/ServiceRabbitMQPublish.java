@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @ApplicationScoped
-public class ServiceRabbitMQ {
+public class ServiceRabbitMQPublish {
 
-    private static final Logger log = LogManager.getLogger(ServiceRabbitMQ.class.getName());
+    private static final Logger log = LogManager.getLogger(ServiceRabbitMQPublish.class.getName());
 
     @Inject
     private PropertiesRabbitMQ propertiesRabbitMQ;

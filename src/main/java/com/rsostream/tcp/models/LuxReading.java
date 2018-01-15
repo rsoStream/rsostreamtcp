@@ -11,7 +11,7 @@ public class LuxReading extends SensorReading {
     public static float numberOfAttributes = 4;
 
     LuxReading(Date dateObtained, String IMEI, int signalQuality, float lux) {
-        super(dateObtained, IMEI, signalQuality);
+        super(EnumType.LUX, dateObtained, IMEI, signalQuality);
         this.lux = lux;
     }
 

@@ -12,7 +12,7 @@ public class HumidityReading extends SensorReading {
     static int numberOfAttributes = 5;
 
     HumidityReading (Date dateObtained, String IMEI, int signalQuality, float temperature, float humidity) {
-        super(EnumType.BAT, dateObtained, IMEI, signalQuality);
+        super(EnumType.HUM, dateObtained, IMEI, signalQuality);
         this.temperature = temperature;
         this.humidity = humidity;
     }

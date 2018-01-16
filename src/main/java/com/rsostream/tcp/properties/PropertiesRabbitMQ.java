@@ -9,6 +9,9 @@ import javax.enterprise.context.ApplicationScoped;
 @ConfigBundle("rabbit-mq")
 public class PropertiesRabbitMQ {
     @ConfigValue(watch = true)
+    private String uri;
+
+    @ConfigValue(watch = true)
     private String host;
 
     @ConfigValue(watch = true)
@@ -61,5 +64,13 @@ public class PropertiesRabbitMQ {
 
     public void setExchangeName(String exchangeName) {
         this.exchangeName = exchangeName;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

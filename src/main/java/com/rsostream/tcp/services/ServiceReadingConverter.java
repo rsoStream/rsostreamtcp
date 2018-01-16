@@ -84,7 +84,7 @@ public class ServiceReadingConverter {
             SensorReading currentReading = convert(message);
             String response = gson.toJson(currentReading);
             log.info("Obtained: " + response);
-            return rabbitMQ.publish(String.valueOf(currentReading.TYPE) + "," + response);
+            return rabbitMQ.publish(String.valueOf(currentReading.TYPE) + "&&" + response);
         } catch (InvalidMessageException e) {
             return false;
         }

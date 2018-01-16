@@ -13,6 +13,9 @@ import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 @ApplicationScoped
@@ -27,18 +30,23 @@ public class ServiceRabbitMQPublish {
     private Channel channel;
 
     @PostConstruct
-    private void init() {
+    private void init(){
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(propertiesRabbitMQ.getHost());
-        // not required for the basic setup!
-//        factory.setHost(propertiesRabbitMQ.getUsername());
-//        factory.setHost(propertiesRabbitMQ.getPassword());
         try {
+            factory.setUri(propertiesRabbitMQ.getUri());
+            factory.setHost(propertiesRabbitMQ.getHost());
+            // not required for the basic setup!
+            factory.setUsername(propertiesRabbitMQ.getUsername());
+            factory.setPassword(propertiesRabbitMQ.getPassword());
+            factory.setVirtualHost(propertiesRabbitMQ.getUsername());
+            factory.setRequestedHeartbeat(30);
+            factory.setConnectionTimeout(30000);
             connection = factory.newConnection();
             channel = connection.createChannel();
             channel.queueDeclare(propertiesRabbitMQ.getRoutingKey(), true, false, false, null);
             log.info("Channel '" + propertiesRabbitMQ.getRoutingKey() + "' created.");
-        } catch (IOException | TimeoutException e) {
+        } catch (IOException | TimeoutException | KeyManagementException
+                | URISyntaxException | NoSuchAlgorithmException e) {
             log.error("Failed to create channel.");
             log.error(e.getMessage());
         }

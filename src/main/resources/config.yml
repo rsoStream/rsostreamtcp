@@ -73,9 +73,10 @@ kumuluzee:
                       </Loggers>
                   </Configuration>'
 rabbit-mq:
-  host: localhost
-  username: guest
-  password: guest
+  uri: amqp://pmhwkvgq:0wV5qBOCns70ZMQBL9qZ6MvfjgQwtRMn@gopher.rmq.cloudamqp.com/pmhwkvgq
+  host: gopher-01.rmq.cloudamqp.com
+  username: pmhwkvgq
+  password: 0wV5qBOCns70ZMQBL9qZ6MvfjgQwtRMn
   routing-key: tcp-q
   exchange-name: ''
 

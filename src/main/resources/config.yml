@@ -7,16 +7,17 @@ kumuluzee:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
     etcd:
-      hosts: http://localhost:2379
+#      hosts: http://localhost:2379
+      hosts: http://etcd:2379
   server:
-#    base-url: http://169.51.13.160 # zunanji URL
-    base-url: http://localhost # zunanji URL
+    base-url: http://169.51.13.160 # zunanji URL
+#    base-url: http://localhost # zunanji URL
     http:
       port: 8080
   discovery:
     etcd:
-#      hosts: http://etcd:2379
-      hosts: http://localhost:2379
+      hosts: http://etcd:2379
+#      hosts: http://localhost:2379
     ttl: 20
     ping-interval: 15
   cors-filter:
